@@ -178,7 +178,7 @@ function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
-              >MEDIGEN-AI-VOICE-VISION</motion.h1>
+              >MEDIGEN-AI-VISION AND VOICE</motion.h1>
               <p style={{ color: 'var(--text-dim)', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '3px', marginTop: '-5px' }}>NEXT-GEN DIAGNOSTIC INTERFACE</p>
             </div>
             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--surface-high)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
