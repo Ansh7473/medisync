@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+.venv/
+env/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Media & Temporary Files
+*.mp3
+*.wav
+*.webm
+*.png
+*.jpg
+*.jpeg
+!frontend/public/*.svg
+!frontend/public/*.png
+
+# Env & Secrets
+.env
+.env.local
+.env.*.local
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
