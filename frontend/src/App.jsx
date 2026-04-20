@@ -7,7 +7,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://medisync-production-e21e.up.railway.app';
 
 // Dampened cubic-bezier specified by Stitch
 const clinicalEase = [0.2, 0, 0, 1];

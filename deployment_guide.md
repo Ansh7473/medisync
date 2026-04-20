@@ -29,7 +29,7 @@ Your code is now live on GitHub: [https://github.com/Ansh7473/medisync](https://
 3.  Choose your `medisync` repository.
 4.  Go to the **Variables** tab and add:
     -   `GROQ_API_KEY`: Your key from Groq Cloud.
-    -   `ELEVENLABS_API_KEY`: (Optional) If you want premium voice.
+    -   `   `: (Optional) If you want premium voice.
 5.  Railway will automatically detect the `server.py` and the `requirements.txt` and start the server.
 6.  Copy the generated URL (e.g., `medisync-production.up.railway.app`).
 
