@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Mic, MicOff, Camera, Activity, History, Heart, Thermometer, 
+import {
+  Mic, MicOff, Camera, Activity, History, Heart, Thermometer,
   Droplets, Zap, ShieldAlert, Stethoscope, ChevronRight,
   User, LayoutDashboard, Settings, LogOut, Info
 } from 'lucide-react';
@@ -13,7 +13,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://medisync-prod
 const clinicalEase = [0.2, 0, 0, 1];
 
 const SidebarItem = ({ date, symptom, active }) => (
-  <motion.div 
+  <motion.div
     className={`history-item ${active ? 'active' : ''}`}
     whileHover={{ x: 5 }}
   >
@@ -40,7 +40,7 @@ const VitalCard = ({ label, value, unit, icon: Icon, color }) => (
     </div>
     {/* Micro-sparkline simulation */}
     <div style={{ marginTop: '0.75rem', height: '2px', background: 'rgba(255,255,255,0.05)', borderRadius: '1px', position: 'relative' }}>
-      <motion.div 
+      <motion.div
         style={{ height: '100%', background: color, width: '40%' }}
         animate={{ width: ['40%', '60%', '45%'] }}
         transition={{ duration: 2, repeat: Infinity }}
@@ -58,7 +58,7 @@ function App() {
   const [diagnosis, setDiagnosis] = useState('');
   const [audioUrl, setAudioUrl] = useState(null);
   const [status, setStatus] = useState('SYSTEM READY');
-  
+
   const [vitals, setVitals] = useState({ bpm: 72, temp: 98.6, o2: 98 });
 
   const mediaRecorderRef = useRef(null);
@@ -132,16 +132,16 @@ function App() {
   };
 
   useEffect(() => {
-    if (audioUrl && audioPlayerRef.current) audioPlayerRef.current.play().catch(() => {});
+    if (audioUrl && audioPlayerRef.current) audioPlayerRef.current.play().catch(() => { });
   }, [audioUrl]);
 
   return (
     <>
       <div className="mesh-bg" />
-      
+
       <div className="app-container">
         {/* LEFT NAV: History & Navigation */}
-        <motion.div 
+        <motion.div
           className="tonal-card sidebar"
           initial={{ x: -40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -151,7 +151,7 @@ function App() {
             <div className="diagnostic-dot" />
             <h3 style={{ fontSize: '0.8rem', letterSpacing: '2px', color: 'var(--primary)' }}>SYNAPSE AI</h3>
           </div>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <div style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-dim)', marginBottom: '0.5rem', paddingLeft: '1rem' }}>CONSULTATION LOG</div>
             <SidebarItem date="20 APR 2024" symptom="Dermatological Check" active />
@@ -160,33 +160,33 @@ function App() {
           </div>
 
           <div style={{ marginTop: 'auto', padding: '1.25rem', background: '#111318', borderRadius: '16px', border: '1px solid var(--glass-border)' }}>
-             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.7rem', fontWeight: 700 }}>
-               <Zap size={14} color="var(--primary)" /> CORE OPTIMAL
-             </div>
-             <p style={{ fontSize: '0.6rem', color: 'var(--text-dim)', marginTop: '0.5rem', lineHeight: '1.4' }}>
-               Neural Link: Active (0.4ms lat)<br />
-               Clinical Core: v2.4.0-stich
-             </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.7rem', fontWeight: 700 }}>
+              <Zap size={14} color="var(--primary)" /> CORE OPTIMAL
+            </div>
+            <p style={{ fontSize: '0.6rem', color: 'var(--text-dim)', marginTop: '0.5rem', lineHeight: '1.4' }}>
+              Neural Link: Active (0.4ms lat)<br />
+              Clinical Core: v2.4.0-stich
+            </p>
           </div>
         </motion.div>
 
         {/* MAIN: Diagnostic Center */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 1rem' }}>
-             <div className="title-section">
-               <motion.h1 
-                 initial={{ opacity: 0 }} 
-                 animate={{ opacity: 1 }}
-                 transition={{ duration: 1 }}
-               >AI DOCTOR</motion.h1>
-               <p style={{ color: 'var(--text-dim)', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '3px', marginTop: '-5px' }}>NEXT-GEN DIAGNOSTIC INTERFACE</p>
-             </div>
-             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--surface-high)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-               <User size={20} color="var(--text-dim)" />
-             </div>
+            <div className="title-section">
+              <motion.h1
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >MEDIGEN-AI-VOICE-VISION</motion.h1>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.8rem', fontWeight: 600, letterSpacing: '3px', marginTop: '-5px' }}>NEXT-GEN DIAGNOSTIC INTERFACE</p>
+            </div>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--surface-high)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <User size={20} color="var(--text-dim)" />
+            </div>
           </header>
 
-          <motion.div 
+          <motion.div
             className="vision-portal"
             initial={{ scale: 0.98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -207,7 +207,7 @@ function App() {
 
           <AnimatePresence>
             {diagnosis && (
-              <motion.div 
+              <motion.div
                 className="insight-glow"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -227,15 +227,15 @@ function App() {
         </div>
 
         {/* RIGHT: Vitals & Comm Link */}
-        <motion.div 
+        <motion.div
           className="tonal-card vitals-panel"
           initial={{ x: 40, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ ease: clinicalEase, duration: 0.8 }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-             <Activity size={18} color="var(--primary)" />
-             <h3 style={{ fontSize: '0.8rem', letterSpacing: '2px' }}>BIOMETRIC STREAM</h3>
+            <Activity size={18} color="var(--primary)" />
+            <h3 style={{ fontSize: '0.8rem', letterSpacing: '2px' }}>BIOMETRIC STREAM</h3>
           </div>
 
           <VitalCard label="Heart Rate" value={vitals.bpm} unit="BPM" icon={Heart} color="#00E5FF" />
@@ -246,7 +246,7 @@ function App() {
             <p style={{ fontSize: '0.65rem', fontWeight: 800, letterSpacing: '1px', color: 'var(--text-dim)' }}>
               {status}
             </p>
-            <motion.button 
+            <motion.button
               className={`mic-button ${isRecording ? 'recording' : ''}`}
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
