@@ -3,7 +3,7 @@ uvicorn==0.27.1
 python-dotenv==1.0.1
 groq==0.4.2
 gTTS==2.5.1
-elevenlabs==0.3.1
+elevenlabs
 SpeechRecognition==3.10.1
 python-multipart==0.0.9
 pydantic==2.6.3
