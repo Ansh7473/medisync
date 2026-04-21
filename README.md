@@ -52,8 +52,16 @@
    # Create a .env file with your GROQ_API_KEY
    python main.py
    ```
+   
+   OR RUN DIRECTLY
 
-3. **Frontend Setup**
+   ```bash
+
+   run_and_setup.bat
+
+   ```
+
+4. **Frontend Setup**
    ```bash
    cd frontend
    npm install
