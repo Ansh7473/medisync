@@ -50,7 +50,7 @@ const VitalCard = ({ label, value, unit, icon: Icon, color }) => (
 );
 
 const TeamMember = ({ name, role }) => (
-  <motion.div 
+  <motion.div
     className="team-member-card"
     whileHover={{ y: -8 }}
   >
@@ -71,9 +71,9 @@ const TeamSection = () => (
       <h3 className="team-title">Project Architects</h3>
     </div>
     <div className="team-grid">
-      <TeamMember name="Creator One" role="Lead Vision Architect" />
-      <TeamMember name="Creator Two" role="Neural Core Engineer" />
-      <TeamMember name="Creator Three" role="Interface Designer" />
+      <TeamMember name="UDIT" role="Lead Vision Architect" />
+      <TeamMember name="ANSH" role="Neural Core Engineer & tester" />
+      <TeamMember name="NILESH" role="PRESENTATIONS" />
     </div>
   </div>
 );
@@ -290,7 +290,7 @@ function App() {
             </div>
           </div>
         </motion.div>
-        
+
         <TeamSection />
       </div>
 
