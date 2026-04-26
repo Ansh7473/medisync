@@ -71,9 +71,9 @@ const TeamSection = () => (
       <h3 className="team-title">Project Architects</h3>
     </div>
     <div className="team-grid">
-      <TeamMember name="UDIT" role="Lead Vision Architect" />
-      <TeamMember name="ANSH" role="Neural Core Engineer & tester" />
-      <TeamMember name="NILESH" role="PRESENTATIONS" />
+      <TeamMember name="UDIT NARAYAN YADAV" role="Lead Vision Architect" />
+      <TeamMember name="ANSH SONI" role="Neural Core Engineer & tester" />
+      <TeamMember name="NILESH SONI" role="PRESENTATIONS" />
     </div>
   </div>
 );
