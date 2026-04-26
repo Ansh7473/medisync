@@ -49,6 +49,35 @@ const VitalCard = ({ label, value, unit, icon: Icon, color }) => (
   </div>
 );
 
+const TeamMember = ({ name, role }) => (
+  <motion.div 
+    className="team-member-card"
+    whileHover={{ y: -8 }}
+  >
+    <div className="member-avatar">
+      <User size={32} />
+    </div>
+    <div className="member-info">
+      <div className="member-name">{name}</div>
+      <div className="member-role">{role}</div>
+    </div>
+  </motion.div>
+);
+
+const TeamSection = () => (
+  <div className="team-section">
+    <div className="team-header">
+      <div className="diagnostic-dot" />
+      <h3 className="team-title">Project Architects</h3>
+    </div>
+    <div className="team-grid">
+      <TeamMember name="Creator One" role="Lead Vision Architect" />
+      <TeamMember name="Creator Two" role="Neural Core Engineer" />
+      <TeamMember name="Creator Three" role="Interface Designer" />
+    </div>
+  </div>
+);
+
 function App() {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -261,6 +290,8 @@ function App() {
             </div>
           </div>
         </motion.div>
+        
+        <TeamSection />
       </div>
 
       {audioUrl && <audio ref={audioPlayerRef} src={audioUrl} />}
