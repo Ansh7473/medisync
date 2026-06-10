@@ -9,6 +9,7 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://medisync-backend-ev2z.onrender.com';
 
+
 // Dampened cubic-bezier specified by Stitch
 const clinicalEase = [0.2, 0, 0, 1];
 
@@ -88,6 +89,7 @@ function App() {
   const [audioUrl, setAudioUrl] = useState(null);
   const [status, setStatus] = useState('SYSTEM READY');
 
+  const [selectedModel, setSelectedModel] = useState('groq-llama4');
   const [vitals, setVitals] = useState({ bpm: 72, temp: 98.6, o2: 98 });
 
   const mediaRecorderRef = useRef(null);
@@ -147,6 +149,7 @@ function App() {
     const formData = new FormData();
     formData.append('image', image);
     formData.append('audio', audioBlob, 'voice.webm');
+    formData.append('model', selectedModel);
     try {
       const resp = await axios.post(`${API_BASE_URL}/api/process`, formData);
       setTranscription(resp.data.transcription);
@@ -176,9 +179,39 @@ function App() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ ease: clinicalEase, duration: 0.8 }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2.5rem', paddingLeft: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
             <div className="diagnostic-dot" />
             <h3 style={{ fontSize: '0.8rem', letterSpacing: '2px', color: 'var(--primary)' }}>SYNAPSE AI</h3>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
+            <div style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-dim)', paddingLeft: '1rem', marginBottom: '0.25rem' }}>DIAGNOSTIC MODEL</div>
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              style={{
+                width: '100%',
+                background: 'var(--surface-high)',
+                border: '1px solid var(--glass-border)',
+                color: '#fff',
+                padding: '0.75rem 1rem',
+                borderRadius: '12px',
+                fontSize: '0.75rem',
+                outline: 'none',
+                cursor: 'pointer',
+                fontWeight: 600,
+                transition: 'all 0.3s ease',
+              }}
+            >
+              <option value="groq-llama4">Llama 4 Scout (Groq)</option>
+              <option value="gemini-flash">Gemini 2.5 Flash (Google)</option>
+              <option value="gemini-2.5-pro">Gemini 2.5 Pro (Google)</option>
+              <option value="gemini-2.0-flash">Gemini 2.0 Flash (Google)</option>
+              <option value="openrouter-nemotron">Nemotron Nano 12B VL (OpenRouter - Free)</option>
+              <option value="together-llama32-vision">Llama 3.2 11B Vision (Together AI - Free Trial)</option>
+              <option value="hf-qwen">Qwen 3 VL 8B (Hugging Face - Free)</option>
+              <option value="mistral-pixtral">Pixtral 12B (Mistral AI - Free)</option>
+            </select>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

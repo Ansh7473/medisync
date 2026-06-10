@@ -26,10 +26,18 @@ app.add_middleware(
 )
 
 # Constants
-from groq_helper import get_groq_keys
-if not get_groq_keys():
-    raise ValueError("No Groq API keys found. Set GROQ_API_KEY or GROQ_API_KEYS in .env.")
-GROQ_API_KEY = get_groq_keys()[0]
+from groq_helper import get_groq_keys, get_gemini_keys, get_openrouter_keys, get_together_keys, get_hf_keys, get_mistral_keys
+groq_keys = get_groq_keys()
+gemini_keys = get_gemini_keys()
+openrouter_keys = get_openrouter_keys()
+together_keys = get_together_keys()
+hf_keys = get_hf_keys()
+mistral_keys = get_mistral_keys()
+
+if not any([groq_keys, gemini_keys, openrouter_keys, together_keys, hf_keys, mistral_keys]):
+    raise ValueError("No API keys found. You must set at least one provider key (GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY, TOGETHER_API_KEY, HF_TOKEN, or MISTRAL_API_KEY) in .env.")
+
+GROQ_API_KEY = groq_keys[0] if groq_keys else None
 
 TEMP_DIR = "temp_uploads"
 os.makedirs(TEMP_DIR, exist_ok=True)
@@ -45,7 +53,8 @@ SYSTEM_PROMPT = """You have to act as a professional doctor, i know you are not 
 @app.post("/api/process")
 async def process_consultation(
     image: UploadFile = File(...),
-    audio: UploadFile = File(...)
+    audio: UploadFile = File(...),
+    model: str = Form("groq-llama4")
 ):
     """
     Process both image and audio to get doctor's response and TTS.
@@ -72,7 +81,7 @@ async def process_consultation(
         doctor_response = analyze_image_with_query(
             query=SYSTEM_PROMPT + "\nPatient says: " + transcription,
             encoded_image=encode_image(image_path),
-            model="meta-llama/llama-4-scout-17b-16e-instruct"
+            model=model
         )
 
         # 3. Generate TTS
@@ -94,6 +103,15 @@ async def process_consultation(
 @app.get("/api/audio_output")
 async def get_audio_output():
     return FileResponse("final_output.mp3", media_type="audio/mpeg")
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}
+
+@app.get("/")
+async def root_check():
+    return {"status": "healthy", "message": "AI Doctor 2.0 API is running"}
+
 
 if __name__ == "__main__":
     import uvicorn

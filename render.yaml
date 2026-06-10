@@ -10,3 +10,25 @@ services:
         sync: false
       - key: GROQ_API_KEYS
         sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_API_KEYS
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEYS
+        sync: false
+      - key: TOGETHER_API_KEY
+        sync: false
+      - key: TOGETHER_API_KEYS
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      - key: HF_TOKENS
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: MISTRAL_API_KEYS
+        sync: false
+
+
