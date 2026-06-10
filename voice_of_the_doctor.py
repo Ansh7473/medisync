@@ -22,15 +22,14 @@ if __name__ == "__main__":
     text_to_speech_with_gtts_old(input_text=input_text, output_filepath="gtts_testing.mp3")
 
 #Step1b: Setup Text to Speech–TTS–model with ElevenLabs
-import elevenlabs
-from elevenlabs.client import ElevenLabs
-from elevenlabs.core.api_error import ApiError
-
+# Lazy configuration for ElevenLabs to avoid failure when not used/installed.
 ELEVENLABS_API_KEY=os.environ.get("ELEVENLABS_API_KEY") or os.environ.get("ELEVEN_API_KEY")
-if not ELEVENLABS_API_KEY:
-    raise ValueError("ELEVENLABS_API_KEY environment variable must be set before using the ElevenLabs client.")
 
 def text_to_speech_with_elevenlabs_old(input_text, output_filepath):
+    import elevenlabs
+    from elevenlabs.client import ElevenLabs
+    if not ELEVENLABS_API_KEY:
+        raise ValueError("ELEVENLABS_API_KEY environment variable must be set before using the ElevenLabs client.")
     client=ElevenLabs(api_key=ELEVENLABS_API_KEY)
     audio=client.generate(
         text= input_text,
@@ -64,7 +63,7 @@ def play_audio_file(output_filepath):
         print(f"An error occurred while trying to play the audio: {e}")
 
 
-def text_to_speech_with_gtts(input_text, output_filepath):
+def text_to_speech_with_gtts(input_text, output_filepath, play=False):
     language="en"
 
     audioobj= gTTS(
@@ -73,14 +72,18 @@ def text_to_speech_with_gtts(input_text, output_filepath):
         slow=False
     )
     audioobj.save(output_filepath)
-    play_audio_file(output_filepath)
+    if play:
+        play_audio_file(output_filepath)
 
 
     # input_text="Hi this is Ai with Hassan, autoplay testing!"
     # text_to_speech_with_gtts(input_text=input_text, output_filepath="gtts_testing_autoplay.mp3")
 
 
-def text_to_speech_with_elevenlabs(input_text, output_filepath):
+def text_to_speech_with_elevenlabs(input_text, output_filepath, play=False):
+    import elevenlabs
+    from elevenlabs.client import ElevenLabs
+    from elevenlabs.core.api_error import ApiError
     if not ELEVENLABS_API_KEY:
         raise ValueError("ELEVENLABS_API_KEY environment variable must be set before using the ElevenLabs client.")
     client=ElevenLabs(api_key=ELEVENLABS_API_KEY)
@@ -96,10 +99,11 @@ def text_to_speech_with_elevenlabs(input_text, output_filepath):
         error_body = getattr(e, 'body', {})
         if isinstance(error_body, dict) and error_body.get('detail', {}).get('code') == 'paid_plan_required':
             print("ElevenLabs voice requires a paid subscription. Falling back to gTTS.")
-            text_to_speech_with_gtts(input_text=input_text, output_filepath=output_filepath)
+            text_to_speech_with_gtts(input_text=input_text, output_filepath=output_filepath, play=play)
             return output_filepath
         raise
-    play_audio_file(output_filepath)
+    if play:
+        play_audio_file(output_filepath)
 
 if __name__ == "__main__":
     # input_text="Hi this is Ai with Hassan, autoplay testing!"

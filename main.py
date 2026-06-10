@@ -26,7 +26,11 @@ app.add_middleware(
 )
 
 # Constants
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+from groq_helper import get_groq_keys
+if not get_groq_keys():
+    raise ValueError("No Groq API keys found. Set GROQ_API_KEY or GROQ_API_KEYS in .env.")
+GROQ_API_KEY = get_groq_keys()[0]
+
 TEMP_DIR = "temp_uploads"
 os.makedirs(TEMP_DIR, exist_ok=True)
 

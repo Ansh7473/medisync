@@ -48,22 +48,27 @@ if __name__ == "__main__":
 
 #Step2: Setup Speech to text–STT–model for transcription
 import os
-from groq import Groq
+from groq_helper import execute_with_fallback
 
-GROQ_API_KEY=os.environ.get("GROQ_API_KEY")
 stt_model="whisper-large-v3"
 
 def transcribe_with_groq(stt_model, audio_filepath, GROQ_API_KEY=None):
-    if not GROQ_API_KEY:
-        raise ValueError("GROQ_API_KEY is not set. Set the GROQ_API_KEY environment variable before running the app.")
+    # Safeguard: Check if the audio file size is too small or empty (e.g. under 2KB)
+    if os.path.exists(audio_filepath) and os.path.getsize(audio_filepath) < 2000:
+        logging.warning("Audio file is too small or empty. Using default query.")
+        return "Please analyze this image and suggest any medical remedies."
 
-    client=Groq(api_key=GROQ_API_KEY)
-    
-    audio_file=open(audio_filepath, "rb")
-    transcription=client.audio.transcriptions.create(
-        model=stt_model,
-        file=audio_file,
-        language="en"
-    )
+    def _transcribe(client):
+        with open(audio_filepath, "rb") as audio_file:
+            transcription=client.audio.transcriptions.create(
+                model=stt_model,
+                file=audio_file,
+                language="en"
+            )
+        return transcription.text
 
-    return transcription.text
+    try:
+        return execute_with_fallback(_transcribe)
+    except Exception as e:
+        logging.error(f"All keys failed during Groq transcription: {e}")
+        return "Please analyze this image and suggest any medical remedies."
